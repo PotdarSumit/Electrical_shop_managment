@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: backend
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/electrical_shop_db
+    username: postgres
+    password: sanu
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8080
+
+jwt:
+  secret: ThisIsVerySecretKeyForJwtAuthentication123456
+  expiration: 86400000
