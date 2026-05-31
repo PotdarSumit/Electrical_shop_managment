@@ -3,6 +3,7 @@ package com.ele_shop_mgmt.backend.service.impl;
 import com.ele_shop_mgmt.backend.dto.request.categoryRequest;
 import com.ele_shop_mgmt.backend.dto.response.CategoryResponse;
 import com.ele_shop_mgmt.backend.entity.Category;
+import com.ele_shop_mgmt.backend.exception.ResourceNotFoundException;
 import com.ele_shop_mgmt.backend.repository.CategoryRepository;
 import com.ele_shop_mgmt.backend.service.interfaces.CategoryService;
 import org.springframework.stereotype.Service;
@@ -40,14 +41,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryResponse getCategoryById(Long id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + id));
         return mapToResponse(category);
     }
 
     @Override
     public CategoryResponse updateCategory(Long id, categoryRequest request) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + id));
 
         category.setName(request.getName());
         category.setDescription(request.getDescription());
@@ -59,7 +60,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteCategory(Long id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + id));
         categoryRepository.delete(category);
     }
 

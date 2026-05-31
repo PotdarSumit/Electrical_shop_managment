@@ -2,6 +2,7 @@ package com.ele_shop_mgmt.backend.service.impl;
 
 
 import com.ele_shop_mgmt.backend.entity.User;
+import com.ele_shop_mgmt.backend.exception.ResourceNotFoundException;
 import com.ele_shop_mgmt.backend.repository.UserRepository;
 /*import com.ele_shop_mgmt.backend.service.interfaces.userDetailService;*/
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,7 +25,7 @@ public class CustomUserDetailsService  implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() ->
-                        new UsernameNotFoundException("User not found with username: " + username));
+                        new ResourceNotFoundException("User not found with username: " + username));
 
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())

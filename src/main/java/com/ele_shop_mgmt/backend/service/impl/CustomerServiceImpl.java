@@ -3,6 +3,8 @@ package com.ele_shop_mgmt.backend.service.impl;
 import com.ele_shop_mgmt.backend.dto.request.CustomerRequest;
 import com.ele_shop_mgmt.backend.dto.response.CustomerResponse;
 import com.ele_shop_mgmt.backend.entity.Customer;
+import com.ele_shop_mgmt.backend.exception.DuplicateResourceException;
+import com.ele_shop_mgmt.backend.exception.ResourceNotFoundException;
 import com.ele_shop_mgmt.backend.repository.CustomerRepository;
 import com.ele_shop_mgmt.backend.service.interfaces.CustomerService;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,7 @@ public class CustomerServiceImpl implements CustomerService {
         // Prevent duplicate mobile numbers
         customerRepository.findByMobileNumber(request.getMobileNumber())
                 .ifPresent(c -> {
-                    throw new RuntimeException("Customer with mobile number already exists");
+                    throw new DuplicateResourceException("Customer with mobile number already exists");
                 });
 
         Customer customer = Customer.builder()
@@ -49,14 +51,14 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerResponse getCustomerById(Long id) {
         Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
         return mapToResponse(customer);
     }
 
     @Override
     public CustomerResponse updateCustomer(Long id, CustomerRequest request) {
         Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
 
         customer.setName(request.getName());
         customer.setMobileNumber(request.getMobileNumber());
@@ -71,7 +73,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void deleteCustomer(Long id) {
         Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + id));
         customerRepository.delete(customer);
     }
 
