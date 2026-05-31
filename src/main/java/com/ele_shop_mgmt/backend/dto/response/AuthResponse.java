@@ -1,13 +1,16 @@
-package com.ele_shop_mgmt.backend.dto;
+package com.ele_shop_mgmt.backend.dto.response;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginRequest {
+@Builder
+public class AuthResponse {
+    private String token;
     private String username;
-    private String password;
+    private String role;
 }

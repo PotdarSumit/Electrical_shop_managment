@@ -1,9 +1,8 @@
 package com.ele_shop_mgmt.backend.controller;
 
-import com.ele_shop_mgmt.backend.dto.AuthResponse;
-import com.ele_shop_mgmt.backend.dto.LoginRequest;
+import com.ele_shop_mgmt.backend.dto.response.AuthResponse;
+import com.ele_shop_mgmt.backend.dto.request.LoginRequest;
 import com.ele_shop_mgmt.backend.jwt.JwtUtil;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
